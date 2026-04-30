@@ -16,36 +16,6 @@ const translations = {
     saveSuccess: 'Record created',
     deleteSuccess: 'Record deleted',
     actionFailed: 'Something went wrong'
-  },
-  es: {
-    loading: 'Cargando...',
-    loadingApp: 'Cargando aplicacion...',
-    unknownComponent: 'Componente no compatible. Mostrando tabla por defecto.',
-    noFields: 'No hay campos en la configuracion',
-    noData: 'Todavia no hay datos. Agrega entradas arriba.',
-    addEntry: 'Agregar entrada',
-    submit: 'Enviar',
-    csvImport: 'Importar CSV',
-    importSuccessful: 'Importacion exitosa',
-    importFailed: 'Fallo la importacion',
-    saveSuccess: 'Registro creado',
-    deleteSuccess: 'Registro eliminado',
-    actionFailed: 'Algo salio mal'
-  },
-  hi: {
-    loading: 'Load ho raha hai...',
-    loadingApp: 'App load ho raha hai...',
-    unknownComponent: 'Unknown component mila, table fallback dikhaya ja raha hai.',
-    noFields: 'Config me fields nahi mile',
-    noData: 'Abhi data nahi hai. Upar se entry add karein.',
-    addEntry: 'Nayi entry jodo',
-    submit: 'Submit',
-    csvImport: 'CSV import',
-    importSuccessful: 'Import successful',
-    importFailed: 'Import fail hua',
-    saveSuccess: 'Record ban gaya',
-    deleteSuccess: 'Record delete ho gaya',
-    actionFailed: 'Kuch galat ho gaya'
   }
 }
 
@@ -56,7 +26,7 @@ export function I18nProvider({ children }) {
 
   const value = useMemo(() => {
     const t = (key) => translations[locale]?.[key] || translations.en[key] || key
-    return { locale, setLocale, t, supportedLocales: Object.keys(translations) }
+    return { locale, setLocale, t, supportedLocales: ['en'] }
   }, [locale])
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>

@@ -28,7 +28,8 @@ export default function AppRuntime({ config, onBack }) {
 
   const token = localStorage.getItem('token')
   const entity = config.entities?.find((item) => item.name === activeEntityName) || config.entities?.[0]
-  const supportedLocales = config.settings?.supportedLocales || ['en']
+  const supportedLocales = (config.settings?.supportedLocales || ['en']).filter((item) => item === 'en')
+  const localeOptions = supportedLocales.length > 0 ? supportedLocales : ['en']
 
   const fetchData = useCallback(async () => {
     if (!entity?.name) {
@@ -213,7 +214,7 @@ export default function AppRuntime({ config, onBack }) {
             onChange={(e) => setLocale(e.target.value)}
             style={styles.select}
           >
-            {supportedLocales.map((item) => (
+            {localeOptions.map((item) => (
               <option key={item} value={item}>{item.toUpperCase()}</option>
             ))}
           </select>
