@@ -1,0 +1,16 @@
+{
+  "app": "Expense Tracker",
+  "entities": [
+    {
+      "name": "expenses",
+      "fields": [
+        { "name": "item", "type": "text", "required": true },
+        { "name": "amount", "type": "number", "required": true },
+        { "name": "category", "type": "text", "required": false },
+        { "name": "date", "type": "text", "required": false }
+      ],
+      "ui": "table"
+    }
+  ],
+  "auth": true
+}
