@@ -8,7 +8,6 @@ import CSVImport from '../components/CSVImport'
 import DynamicDashboard from '../components/DynamicDashboard'
 import ApiExplorer from '../components/ApiExplorer'
 import ProjectExporter from '../components/ProjectExporter'
-import { useI18n } from '../context/I18nContext'
 import { useToast } from '../context/ToastContext'
 
 export default function AppRuntime({ config, onBack }) {
@@ -23,13 +22,10 @@ export default function AppRuntime({ config, onBack }) {
   const [pushLoading, setPushLoading] = useState(false)
   const [pushError, setPushError] = useState('')
   const [activeEntityName, setActiveEntityName] = useState(config.entities?.[0]?.name || '')
-  const { locale, setLocale, t } = useI18n()
   const { pushToast } = useToast()
 
   const token = localStorage.getItem('token')
   const entity = config.entities?.find((item) => item.name === activeEntityName) || config.entities?.[0]
-  const supportedLocales = (config.settings?.supportedLocales || ['en']).filter((item) => item === 'en')
-  const localeOptions = supportedLocales.length > 0 ? supportedLocales : ['en']
 
   const fetchData = useCallback(async () => {
     if (!entity?.name) {
@@ -46,10 +42,10 @@ export default function AppRuntime({ config, onBack }) {
       setData(res.data)
       setLoading(false)
     } catch (err) {
-      pushToast(err.response?.data?.error || t('actionFailed'), 'error')
+      pushToast(err.response?.data?.error || 'Something went wrong', 'error')
       setLoading(false)
     }
-  }, [config._id, entity?.name, pushToast, t, token])
+  }, [config._id, entity?.name, pushToast, token])
 
   useEffect(() => {
     fetchData()
@@ -82,9 +78,9 @@ export default function AppRuntime({ config, onBack }) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       setData(prev => [...prev, res.data])
-      pushToast(t('saveSuccess'), 'success')
+      pushToast('Record created', 'success')
     } catch (err) {
-      pushToast(err.response?.data?.error || t('actionFailed'), 'error')
+      pushToast(err.response?.data?.error || 'Something went wrong', 'error')
     }
   }
 
@@ -95,9 +91,9 @@ export default function AppRuntime({ config, onBack }) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       setData(prev => prev.filter(item => item._id !== id))
-      pushToast(t('deleteSuccess'), 'success')
+      pushToast('Record deleted', 'success')
     } catch (err) {
-      pushToast(err.response?.data?.error || t('actionFailed'), 'error')
+      pushToast(err.response?.data?.error || 'Something went wrong', 'error')
     }
   }
 
@@ -191,7 +187,7 @@ export default function AppRuntime({ config, onBack }) {
     table: () => <DynamicTable fields={entity.fields} data={data} onDelete={handleDelete} />
   }
 
-  if (loading) return <div style={styles.center}>⏳ {t('loadingApp')}</div>
+  if (loading) return <div style={styles.center}>⏳ Loading app...</div>
 
   const requiredCount = entity.fields?.filter((field) => field.required).length || 0
   const optionalCount = (entity.fields?.length || 0) - requiredCount
@@ -209,15 +205,6 @@ export default function AppRuntime({ config, onBack }) {
         </div>
 
         <div style={styles.controlsRow}>
-          <select
-            value={locale}
-            onChange={(e) => setLocale(e.target.value)}
-            style={styles.select}
-          >
-            {localeOptions.map((item) => (
-              <option key={item} value={item}>{item.toUpperCase()}</option>
-            ))}
-          </select>
           <select
             value={entity.name}
             onChange={(e) => setActiveEntityName(e.target.value)}

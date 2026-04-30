@@ -28,19 +28,14 @@ This project now emphasizes reliability under imperfect inputs, extensibility, a
 
 ## Mandatory integrated features implemented
 
-1. Multi-language UI (Localization)
-- Runtime supports language switching (EN/ES/HI)
-- Config supports `settings.supportedLocales` and `settings.defaultLocale`
-- Translation fallback avoids runtime breakage
-
-2. CSV Import System (Upload -> Map -> Store -> Render)
+1. CSV Import System (Upload -> Map -> Store -> Render)
 - CSV upload and parse
 - Column mapping to dynamic fields
 - Required field mapping checks
 - Authenticated row import to dynamic APIs
 - Partial-success and failure notifications
 
-3. Event-based Notifications
+2. Event-based Notifications
 - Central toast event system
 - Success/error notifications on create, delete, import, and API failures
 - Works across dashboard and runtime workflows
@@ -136,8 +131,8 @@ Do not create a separate frontend service for the default deployment. One Render
 
 1. Show architecture and config-driven flow
 2. Call `POST /api/configs/validate` with imperfect JSON and show warnings/errors
-3. Create a new app from builder (with locales and UI modules)
-4. Open runtime and switch entities/languages
+3. Create a new app from builder
+4. Open runtime and switch entities
 5. Add data with dynamic form and validate required fields
 6. Import CSV and show mapped rows in table
 7. Show API + DB explorer generated from config metadata

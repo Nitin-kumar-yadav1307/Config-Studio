@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Papa from 'papaparse'
 import axios from 'axios'
-import { useI18n } from '../context/I18nContext'
 import { useToast } from '../context/ToastContext'
 
 export default function CSVImport({ fields, entityName, configId, onImport, headers = {} }) {
@@ -12,7 +11,6 @@ export default function CSVImport({ fields, entityName, configId, onImport, head
   const [step, setStep] = useState(1) // 1=upload, 2=map, 3=done
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const { t } = useI18n()
   const { pushToast } = useToast()
 
   const handleFileUpload = (e) => {
@@ -89,20 +87,19 @@ export default function CSVImport({ fields, entityName, configId, onImport, head
 
     if (successCount > 0) {
       setStep(3)
-      pushToast(`${t('importSuccessful')} (${successCount} rows)`, 'success')
+      pushToast(`Import successful (${successCount} rows)`, 'success')
       if (failedCount > 0) {
         pushToast(`${failedCount} rows failed`, 'error')
       }
     } else {
       setError('All rows failed to import')
-      pushToast(t('importFailed'), 'error')
+      pushToast('Import failed', 'error')
     }
     setLoading(false)
 
   } catch (err) {
     setError('Import failed: ' + err.message)
-    pushToast(t('importFailed'), 'error')
-    setLoading(false)
+      pushToast('Import failed', 'error')
   }
 }
 

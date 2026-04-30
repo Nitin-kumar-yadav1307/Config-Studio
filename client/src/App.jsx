@@ -1,5 +1,4 @@
 import { AuthProvider, useAuth } from './context/AuthContext'
-import { I18nProvider } from './context/I18nContext'
 import { ToastProvider } from './context/ToastContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -24,13 +23,11 @@ function AppContent() {
 
 function App() {
   return (
-    <I18nProvider>
-      <ToastProvider>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </ToastProvider>
-    </I18nProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ToastProvider>
   )
 }
 

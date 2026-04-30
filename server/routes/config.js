@@ -58,7 +58,6 @@ router.post('/', getUser, async (req, res) => {
       app: result.normalized.app,
       entities: result.normalized.entities,
       auth: true,
-      settings: result.normalized.settings,
       metadata: {
         normalizationWarnings: result.warnings
       }

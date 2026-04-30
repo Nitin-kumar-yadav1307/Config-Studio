@@ -24,7 +24,6 @@ const createEntity = (entity = {}) => ({
 
 export default function AppBuilder({ onCreated, onBack }) {
   const [appName, setAppName] = useState('')
-  const [supportedLocales, setSupportedLocales] = useState(['en'])
   const [entities, setEntities] = useState([
     createEntity({
       name: 'customers',
@@ -143,11 +142,7 @@ export default function AppBuilder({ onCreated, onBack }) {
     try {
       const config = {
         app: appName,
-        entities: sanitizedEntities,
-        settings: {
-          supportedLocales,
-          defaultLocale: supportedLocales[0]
-        }
+        entities: sanitizedEntities
       }
 
       const res = await axios.post('/api/configs', config, { headers })
@@ -297,31 +292,6 @@ export default function AppBuilder({ onCreated, onBack }) {
           </button>
         </div>
 
-        <div style={styles.section}>
-          <label style={styles.label}>Locales</label>
-          <div style={styles.fieldRow}>
-            {['en', 'es', 'hi'].map((locale) => (
-              <label key={locale} style={styles.checkLabel}>
-                <input
-                  type="checkbox"
-                  checked={supportedLocales.includes(locale)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSupportedLocales((prev) => [...new Set([...prev, locale])])
-                    } else {
-                      setSupportedLocales((prev) => {
-                        const next = prev.filter((item) => item !== locale)
-                        return next.length > 0 ? next : ['en']
-                      })
-                    }
-                  }}
-                />
-                {locale.toUpperCase()}
-              </label>
-            ))}
-          </div>
-        </div>
-
         {/* Preview */}
         {appName && entities.some((entity) => entity.fields.some((field) => field.name)) && (
           <div style={styles.preview}>
@@ -334,11 +304,7 @@ export default function AppBuilder({ onCreated, onBack }) {
                   fields: entity.fields.filter((field) => field.name),
                   ui: entity.ui,
                   uiComponents: entity.uiComponents || ['form', 'table']
-                })),
-                settings: {
-                  supportedLocales,
-                  defaultLocale: supportedLocales[0]
-                }
+                }))
               }, null, 2)}
             </pre>
           </div>

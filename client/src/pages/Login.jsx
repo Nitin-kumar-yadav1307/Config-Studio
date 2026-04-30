@@ -29,7 +29,7 @@ export default function Login() {
       <div style={styles.glowLeft} />
       <div style={styles.glowRight} />
       <div style={styles.card}>
-        <p style={styles.kicker}>CONFIG STUDIO</p>
+        <h1 style={styles.kicker}>CONFIG STUDIO</h1>
        
         <h2 style={styles.subtitle}>
           {isLogin ? 'Sign in to continue' : 'Create your workspace account'}

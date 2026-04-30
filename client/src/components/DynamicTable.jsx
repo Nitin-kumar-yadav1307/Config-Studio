@@ -1,10 +1,6 @@
-import { useI18n } from '../context/I18nContext'
-
 export default function DynamicTable({ fields, data, onDelete }) {
-  const { t } = useI18n()
-
   if (!fields || fields.length === 0) return (
-    <p>⚠️ {t('noFields')}</p>
+    <p>⚠️ No fields found in config</p>
   )
 
   return (
@@ -12,7 +8,7 @@ export default function DynamicTable({ fields, data, onDelete }) {
       <h2 style={styles.heading}>{data.length} Records</h2>
 
       {data.length === 0 ? (
-        <p style={styles.empty}>{t('noData')} ☝️</p>
+        <p style={styles.empty}>No data yet. Add some entries above! ☝️</p>
       ) : (
         <div style={styles.tableWrapper}>
           <table style={styles.table}>

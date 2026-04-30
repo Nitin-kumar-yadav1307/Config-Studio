@@ -62,26 +62,7 @@ const normalizeUiComponents = (entity, entityName, warnings) => {
   return supported
 }
 
-const normalizeSettings = (settings = {}, warnings) => {
-  const fallback = ['en']
-  const supportedLocales = Array.isArray(settings.supportedLocales)
-    ? settings.supportedLocales.filter((locale) => typeof locale === 'string' && locale.trim())
-    : fallback
-
-  const locales = supportedLocales.length > 0 ? supportedLocales : fallback
-  const defaultLocale = locales.includes(settings.defaultLocale) ? settings.defaultLocale : locales[0]
-
-  if (settings.defaultLocale && !locales.includes(settings.defaultLocale)) {
-    warnings.push(`Default locale '${settings.defaultLocale}' is not in supportedLocales; defaulted to '${defaultLocale}'.`)
-  }
-
-  return {
-    supportedLocales: locales,
-    defaultLocale
-  }
-}
-
-const normalizeConfigInput = ({ app, entities = [], settings = {} }) => {
+const normalizeConfigInput = ({ app, entities = [] }) => {
   const warnings = []
 
   if (!app || typeof app !== 'string' || !app.trim()) {
@@ -150,8 +131,7 @@ const normalizeConfigInput = ({ app, entities = [], settings = {} }) => {
 
   const normalized = {
     app: app.trim(),
-    entities: normalizedEntities,
-    settings: normalizeSettings(settings, warnings)
+    entities: normalizedEntities
   }
 
   return {

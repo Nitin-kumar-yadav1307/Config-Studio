@@ -1,13 +1,11 @@
 import { useState } from 'react'
-import { useI18n } from '../context/I18nContext'
 
 export default function DynamicForm({ fields, onSubmit }) {
   const [formData, setFormData] = useState({})
   const [errors, setErrors] = useState({})
-  const { t } = useI18n()
 
   if (!fields || fields.length === 0) return (
-    <p>⚠️ {t('noFields')}</p>
+    <p>⚠️ No fields found in config</p>
   )
 
   const validate = () => {
@@ -43,7 +41,7 @@ export default function DynamicForm({ fields, onSubmit }) {
 
   return (
     <div style={styles.card}>
-      <h2 style={styles.heading}>{t('addEntry')}</h2>
+      <h2 style={styles.heading}>Add New Entry</h2>
       <form onSubmit={handleSubmit}>
         <div style={styles.grid}>
           {fields.map(field => (
@@ -80,7 +78,7 @@ export default function DynamicForm({ fields, onSubmit }) {
           ))}
         </div>
         <button type="submit" style={styles.button}>
-          {t('submit')}
+          Submit
         </button>
       </form>
     </div>

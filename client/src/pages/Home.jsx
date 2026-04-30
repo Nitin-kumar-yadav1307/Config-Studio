@@ -2,14 +2,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext'
-import { useI18n } from '../context/I18nContext'
 import { useToast } from '../context/ToastContext'
 import AppBuilder from './AppBuilder'
 import AppRuntime from './AppRuntime'
 
 export default function Home() {
   const { user, logout } = useAuth()
-  const { locale, setLocale, supportedLocales } = useI18n()
   const { pushToast } = useToast()
   const [configs, setConfigs] = useState([])
   const [loading, setLoading] = useState(true)
@@ -88,15 +86,6 @@ export default function Home() {
           <p style={styles.subtitle}>Build runtime-ready apps from JSON, not from hardcoded screens.</p>
         </div>
         <div style={styles.headerRight}>
-          <select
-            value={locale}
-            onChange={(e) => setLocale(e.target.value)}
-            style={styles.localeSelect}
-          >
-            {supportedLocales.map((item) => (
-              <option key={item} value={item}>{item.toUpperCase()}</option>
-            ))}
-          </select>
           <span style={styles.userName}>{user?.name}</span>
           <button
             onClick={() => setView('builder')}
@@ -245,12 +234,6 @@ const styles = {
   userName: {
     color: '#334155',
     fontWeight: 600
-  },
-  localeSelect: {
-    border: '1px solid #ddd',
-    borderRadius: '10px',
-    padding: '8px 10px',
-    background: '#ffffff'
   },
   createBtn: {
     background: 'linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)',

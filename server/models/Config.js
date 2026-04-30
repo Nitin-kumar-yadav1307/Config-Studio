@@ -21,10 +21,6 @@ const configSchema = new mongoose.Schema({
   app: { type: String, required: true },
   entities: [entitySchema],
   auth: { type: Boolean, default: true },
-  settings: {
-    defaultLocale: { type: String, default: 'en' },
-    supportedLocales: { type: [String], default: ['en'] }
-  },
   metadata: {
     normalizationWarnings: { type: [String], default: [] }
   }
